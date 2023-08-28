@@ -100,13 +100,13 @@ light:
 - platform: pca9685
     leds:
       - name: Lightstrip Simple
-        pin: 10
+        pins: 10
         address: 65
       - name: Lightstrip RGB
-        pin: [2,5,9]
+        pins: [2,5,9]
         address: 65
       - name: Lightstrip RGBW
-        pin: [1,2,4,6]
+        pins: [1,2,4,6]
         address: 65
 
 number:
