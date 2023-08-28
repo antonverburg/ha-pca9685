@@ -1,6 +1,6 @@
 # Home Assistant PCA9685 PWM custom integration
 
-**This is a spin-off from an original Home Assistant integration which was removed in Home Assistant Core 2022.4. The origional rpi_gpi_pwm was stored [here](https://github.com/RedMeKool/HA-Raspberry-pi-GPIO-PWM/) but due to changes in 2022.7.5 support for pca9685 PWM devices was dropped. This module brings back  support for the pca9685 PWM LED driver in a separate component.**
+**This is a spin-off from an original Home Assistant integration which was removed in Home Assistant Core 2022.4. The original rpi_gpi_pwm was stored [here](https://github.com/RedMeKool/HA-Raspberry-pi-GPIO-PWM/) but due to changes in 2022.7.5 support for pca9685 PWM devices was dropped. This module brings back  support for the pca9685 PWM LED driver in a separate component.**
 
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
