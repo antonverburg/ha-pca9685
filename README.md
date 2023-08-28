@@ -58,7 +58,7 @@ light:
   - platform: pca9685
     leds:
       - name: Lightstrip Cupboard
-        pin: 10
+        pins: 10
         address: 55
 
 
@@ -78,12 +78,14 @@ number:
   > required: true | type: map
 - name: Name of the LED.
   > required: true | type: string
-- pin: The pins connected to the LED as a list. For single LED, assign one integer, for RGB assign 3 integers, for RGBW assign 4. Numbering starts from 0 up to 15.
+- pins: The pins connected to the LED as a list. For single LED, assign one integer, for RGB assign 3 integers, for RGBW assign 4. Numbering starts from 0 up to 15.
   > required: true | type: [int]
 - frequency: The PWM frequency.
   > required: false | type: int
 - address: I2C address of the LED driver
   > required: false | default: 0x40 | type: int
+- pin: The pin connected to the number. Numbering starts from 0 up to 15.
+  > required: true | type: int
 - invert: Invert signal of the PWM generator (only available for the number platform)
   > required: false | default: false | type: boolean
 - minimum: Minimal value of the number. PWM output will be normalized between minimum and maximum.
