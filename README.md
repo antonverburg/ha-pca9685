@@ -1,6 +1,6 @@
 # Home Assistant PCA9685 PWM custom integration
 
-**This is a spin-off from an original Home Assistant integration which was removed in Home Assistant Core 2022.4. The origional rpi_gpi_pwm was taken over [here](https://github.com/RedMeKool/HA-Raspberry-pi-GPIO-PWM/) but due to changes in 2022.7.5 support for pca9685 PWM devices was dropped. This module brings back separate support for the pca9685 PWM driver.**
+**This is a spin-off from an original Home Assistant integration which was removed in Home Assistant Core 2022.4. The origional rpi_gpi_pwm was stored [here](https://github.com/RedMeKool/HA-Raspberry-pi-GPIO-PWM/) but due to changes in 2022.7.5 support for pca9685 PWM devices was dropped. This module brings back  support for the pca9685 PWM LED driver in a separate component.**
 
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
@@ -14,7 +14,7 @@
 
 **Description.**
 
-The pca9685 platform allows to control multiple lights using pulse-width modulation, for example LED strips. It supports one-color, RGB and RGBW LEDs driven by pca9685 devices. Connection to the pca9685 devices is made via the I2C bus.
+The pca9685 component allows to control multiple lights using pulse-width modulation, for example LED strips. It supports one-color, RGB and RGBW LEDs driven by pca9685 devices. A PWM output can also be configured as a number. Connection to the pca9685 devices is made via the I2C bus.
 
 For more details about the pca9685 I2C PWM LED controller you can find the datasheets here:
 - [PCA9685](https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf)
@@ -48,7 +48,7 @@ Platform | Description
 
 ## YAML Configuration
 
-This integration can be configured and set up manually via YAML. To enable the integration binary_sensor or switch in your installation, add the following to your `configuration.yaml` file:
+This integration can be configured and set up manually via YAML. To enable the light or number in your installation, add the following to your `configuration.yaml` file:
 
 ```yaml
 # Example configuration.yaml entry
