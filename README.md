@@ -90,6 +90,8 @@ number:
   > required: true | type: [int]
 
 ***number specific settings:***
+- numbers: List of the numbers.
+  > required: true | type: map
 - pin: The pin connected to the number. Numbering starts from 0 up to 15.
   > required: true | type: int
 - invert: Invert signal of the PWM generator (only available for the number platform)
