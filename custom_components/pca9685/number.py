@@ -23,9 +23,7 @@ from homeassistant.const import (
 )
 import homeassistant.helpers.config_validation as cv
 
-from .const import (
-    CONF_FREQUENCY,
-)
+from .const import CONF_FREQUENCY, CONF_NORMALIZE_LOWER, CONF_NORMALIZE_UPPER
 
 CONF_NUMBERS = "numbers"
 CONF_PIN = "pin"
@@ -58,6 +56,12 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
                     vol.Optional(CONF_MAXIMUM, default=DEFAULT_MAX_VALUE): vol.Coerce(
                         float
                     ),
+                    vol.Optional(
+                        CONF_NORMALIZE_LOWER, default=DEFAULT_MIN_VALUE
+                    ): vol.Coerce(float),
+                    vol.Optional(
+                        CONF_NORMALIZE_UPPER, default=DEFAULT_MAX_VALUE
+                    ): vol.Coerce(float),
                     vol.Optional(CONF_STEP, default=DEFAULT_STEP): cv.positive_float,
                     vol.Optional(CONF_MODE, default=MODE_SLIDER): vol.In(
                         [MODE_BOX, MODE_SLIDER, MODE_AUTO]
@@ -112,6 +116,8 @@ class PwmNumber(RestoreNumber):
                     last_data.native_value,
                     self.name,
                 )
+        else:
+            await self.async_set_native_value(config[CONF_MINIMUM])
 
     @property
     def should_poll(self):
@@ -149,14 +155,18 @@ class PwmNumber(RestoreNumber):
         if value > self._config[CONF_MAXIMUM]:
             value = self._config[CONF_MAXIMUM]
 
-        # Scale range from 0..100 to 0..65535 (pca9685)
-        max_pwm = 65535.0
         # In case the invert bit is on, invert the value
         used_value = value
         if self._config[CONF_INVERT]:
-            used_value = 100.0 - value
+            used_value = self._config[CONF_NORMALIZE_UPPER] - value
+
+        # Scale range from N_L..N_U to 0..65535 (pca9685)
+        range_pwm = 65535.0
+        range_value = (
+            self._config[CONF_NORMALIZE_UPPER] - self._config[CONF_NORMALIZE_LOWER]
+        )
         # Scale to range of the driver
-        scaled_value = int(round((used_value / 100.0) * max_pwm))
+        scaled_value = int(round((used_value / range_value) * range_pwm))
         # Set value to driver
         self._driver._set_pwm([scaled_value])  # pylint: disable=W0212
         self._attr_native_value = value

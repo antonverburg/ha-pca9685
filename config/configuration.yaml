@@ -30,4 +30,6 @@ number:
         invert: true
         minimum: 11
         maximum: 89
+        normalize_lower: -20
+        normalize_upper: 120
         address: 65
