@@ -53,24 +53,17 @@ This integration can be configured and set up manually via YAML. To enable the l
 ```yaml
 # Example configuration.yaml entry
 
-
 light:
   - platform: pca9685
     leds:
       - name: Lightstrip Cupboard
         pins: 10
-        address: 55
-
 
 number:
   - platform: pca9685
     numbers:
       - name: Test number
         pin: 12
-        frequency: 1000
-        invert: true
-        minimum: 11
-        maximum: 89
 ```
 
 ### Configuration parameters
