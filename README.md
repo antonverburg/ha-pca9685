@@ -74,24 +74,34 @@ number:
 ```
 
 ### Configuration parameters
-- leds: List of LEDs.
-  > required: true | type: map
+
+***Generic settings:***
 - name: Name of the LED.
   > required: true | type: string
-- pins: The pins connected to the LED as a list. For single LED, assign one integer, for RGB assign 3 integers, for RGBW assign 4. Numbering starts from 0 up to 15.
-  > required: true | type: [int]
-- frequency: The PWM frequency.
+- frequency: The PWM frequency. 
   > required: false | type: int
 - address: I2C address of the LED driver
   > required: false | default: 0x40 | type: int
+
+***Light specific settings:***
+- leds: List of LEDs.
+  > required: true | type: map
+- pins: The pins connected to the LED as a list. For single LED, assign one integer, for RGB assign 3 integers, for RGBW assign 4. Numbering starts from 0 up to 15.
+  > required: true | type: [int]
+
+***number specific settings:***
 - pin: The pin connected to the number. Numbering starts from 0 up to 15.
   > required: true | type: int
 - invert: Invert signal of the PWM generator (only available for the number platform)
   > required: false | default: false | type: boolean
-- minimum: Minimal value of the number. PWM output will be normalized between minimum and maximum.
+- minimum: Minimal (clipping) value of the number.
   > required: false | default: 0 | type: float
-- maximum: Maximal value of the slow_pwm number. Timed output will be normalized between minimum and maximum.
+- maximum: Maximal (clipping) value of the number. 
   > required: false| default: 100 | type: float
+- normalize_lower: Lower value to normalize the output of the PWM signal on.
+  > required: false | default: 0 | type: float
+- normalize_upper: Upper value to normalize the output of the PWM output on.
+  > required: false | default: 100 | type: float
 
 ### Full configuration example
 
@@ -116,8 +126,10 @@ number:
         pin: 12
         frequency: 1000
         invert: true
-        minimum: 11
-        maximum: 89
+        minimum: 11.5
+        maximum: 75.7
+        normalize_lower: -10.8
+        normalize_upper: 200.5
         address: 65
 
 ```
