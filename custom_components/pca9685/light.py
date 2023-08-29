@@ -67,11 +67,11 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
         driver = Pca9685Driver(pins, **opt_args)
 
         name = led_conf[CONF_NAME]
-        if len(pins == 1):
+        if len(pins) == 1:
             led = PwmSimpleLed(SimpleLed(driver), name)
-        elif len(pins == 3):
+        elif len(pins) == 3:
             led = PwmRgbLed(RgbLed(driver), name)
-        elif len(pins == 4):
+        elif len(pins) == 4:
             led = PwmRgbLed(RgbwLed(driver), name)
         else:
             _LOGGER.error("Invalid led type")

@@ -6,3 +6,28 @@ logger:
   default: info
   logs:
     custom_components.pca9685: debug
+
+
+light:
+  - platform: pca9685
+    leds:
+      - name: Lightstrip Simple
+        pins: 10
+        address: 65
+      - name: Lightstrip RGB
+        pins: [2,5,9]
+        address: 65
+      - name: Lightstrip RGBW
+        pins: [1,2,4,6]
+        address: 65
+
+number:
+  - platform: pca9685
+    numbers:
+      - name: Test number
+        pin: 12
+        frequency: 1000
+        invert: true
+        minimum: 11
+        maximum: 89
+        address: 65
