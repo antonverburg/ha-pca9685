@@ -117,7 +117,7 @@ class PwmNumber(RestoreNumber):
                     self.name,
                 )
         else:
-            await self.async_set_native_value(config[CONF_MINIMUM])
+            await self.async_set_native_value(self._config[CONF_MINIMUM])
 
     @property
     def should_poll(self):
