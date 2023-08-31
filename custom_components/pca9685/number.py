@@ -20,22 +20,23 @@ from homeassistant.const import (
     CONF_MINIMUM,
     CONF_MODE,
     CONF_NAME,
+    CONF_PIN,
 )
 import homeassistant.helpers.config_validation as cv
 
-from .const import CONF_FREQUENCY, CONF_NORMALIZE_LOWER, CONF_NORMALIZE_UPPER
-
-CONF_NUMBERS = "numbers"
-CONF_PIN = "pin"
-CONF_INVERT = "invert"
-CONF_STEP = "step"
-
-MODE_SLIDER = "slider"
-MODE_BOX = "box"
-MODE_AUTO = "auto"
-
-ATTR_FREQUENCY = "frequency"
-ATTR_INVERT = "invert"
+from .const import (
+    CONF_FREQUENCY,
+    CONF_NORMALIZE_LOWER,
+    CONF_NORMALIZE_UPPER,
+    CONF_NUMBERS,
+    CONF_INVERT,
+    CONF_STEP,
+    MODE_SLIDER,
+    MODE_BOX,
+    MODE_AUTO,
+    ATTR_FREQUENCY,
+    ATTR_INVERT,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -168,6 +169,6 @@ class PwmNumber(RestoreNumber):
         # Scale to range of the driver
         scaled_value = int(round((used_value / range_value) * range_pwm))
         # Set value to driver
-        self._driver._set_pwm([scaled_value])  # pylint: disable=W0212
+        self._driver._set_pwm([scaled_value])  # pylint: disable=protected-access
         self._attr_native_value = value
         self.async_write_ha_state()

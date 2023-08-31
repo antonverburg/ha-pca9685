@@ -13,10 +13,9 @@ from homeassistant.components.light import (
     ATTR_HS_COLOR,
     ATTR_TRANSITION,
     PLATFORM_SCHEMA,
-    SUPPORT_BRIGHTNESS,
-    SUPPORT_COLOR,
-    SUPPORT_TRANSITION,
+    ColorMode,
     LightEntity,
+    LightEntityFeature,
 )
 from homeassistant.const import CONF_ADDRESS, CONF_NAME, STATE_ON
 import homeassistant.helpers.config_validation as cv
@@ -25,13 +24,11 @@ import homeassistant.util.color as color_util
 
 from .const import (
     CONF_FREQUENCY,
+    CONF_LEDS,
+    CONF_PINS,
+    DEFAULT_BRIGHTNESS,
+    DEFAULT_COLOR,
 )
-
-CONF_LEDS = "leds"
-CONF_PINS = "pins"
-
-DEFAULT_BRIGHTNESS = 255
-DEFAULT_COLOR = [0, 0]
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -84,12 +81,16 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 class PwmSimpleLed(LightEntity, RestoreEntity):
     """Representation of a simple one-color PWM LED."""
 
+    _attr_color_mode = ColorMode.BRIGHTNESS
+    _attr_supported_color_modes = {ColorMode.BRIGHTNESS}
+
     def __init__(self, led, name):
         """Initialize one-color PWM LED."""
         self._led = led
         self._name = name
         self._is_on = False
         self._brightness = DEFAULT_BRIGHTNESS
+        self._attr_supported_features |= LightEntityFeature.TRANSITION
 
     async def async_added_to_hass(self):
         """Handle entity about to be added to hass event."""
@@ -119,11 +120,6 @@ class PwmSimpleLed(LightEntity, RestoreEntity):
     def brightness(self):
         """Return the brightness property."""
         return self._brightness
-
-    @property
-    def supported_features(self):
-        """Flag supported features."""
-        return SUPPORT_BRIGHTNESS | SUPPORT_TRANSITION
 
     def turn_on(self, **kwargs):
         """Turn on a led."""
@@ -176,11 +172,6 @@ class PwmRgbLed(PwmSimpleLed):
     def hs_color(self):
         """Return the color property."""
         return self._color
-
-    @property
-    def supported_features(self):
-        """Flag supported features."""
-        return SUPPORT_BRIGHTNESS | SUPPORT_COLOR | SUPPORT_TRANSITION
 
     def turn_on(self, **kwargs):
         """Turn on a LED."""
