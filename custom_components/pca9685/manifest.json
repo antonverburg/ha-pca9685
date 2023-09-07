@@ -8,7 +8,7 @@
     "iot_class": "local_push",
     "issue_tracker": "https://github.com/antonverburg/ha-pca9685/issues",
     "requirements": [
-        "pwmled==1.6.7"
+        "pwmled==1.6.10"
     ],
     "version": "0.9.0"
 }
