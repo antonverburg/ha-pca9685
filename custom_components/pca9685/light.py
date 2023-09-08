@@ -156,6 +156,8 @@ class PwmSimpleLed(LightEntity, RestoreEntity):
 
 class PwmRgbLed(PwmSimpleLed):
     """Representation of a RGB(W) PWM LED."""
+    _attr_color_mode = ColorMode.HS
+    _attr_supported_color_modes = {ColorMode.HS}
 
     def __init__(self, led, name):
         """Initialize a RGB(W) PWM LED."""
